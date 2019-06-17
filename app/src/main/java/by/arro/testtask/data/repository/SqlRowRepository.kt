@@ -20,5 +20,12 @@ class SqlRowRepository(private val rowsDao: RowsDao) : RowRepository {
         }
     }
 
+    override fun save(row: Row) {
+        rowsDao.insert(coreToRowDataModel(row))
+    }
+
+    private fun coreToRowDataModel(row: Row) = RowDataModel(row.id, row.rowValue)
+
+
     private fun RowDataModel.rowDataModelToCore() = Row(id, rowValue)
 }

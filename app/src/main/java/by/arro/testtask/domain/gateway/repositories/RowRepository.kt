@@ -8,4 +8,6 @@ interface RowRepository {
     fun getAll(): List<Row>
 
     fun getAllWithUpdate(): Flowable<List<Row>>
+
+    fun save(row: Row)
 }

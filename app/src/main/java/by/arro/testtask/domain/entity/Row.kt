@@ -4,5 +4,5 @@ class Row(
 
     val id: Int,
 
-    val rowsValue: String
+    val rowValue: String
 )
