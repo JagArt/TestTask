@@ -10,7 +10,8 @@ import by.arro.testtask.domain.entity.Row
 import kotlinx.android.synthetic.main.item_row.view.*
 
 class RowsAdatpter(
-    context: Context
+    context: Context,
+    private val onDeleteClicked: (Int) -> Unit
 ) : RecyclerView.Adapter<RowsAdatpter.RowViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
@@ -19,7 +20,7 @@ class RowsAdatpter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RowViewHolder {
         val itemView = inflater.inflate(R.layout.item_row, parent, false)
-        return RowViewHolder(itemView)
+        return RowViewHolder(itemView, onDeleteClicked)
     }
 
     override fun getItemCount(): Int {
@@ -37,10 +38,19 @@ class RowsAdatpter(
     }
 
     class RowViewHolder(
-        itemView: View
+        itemView: View,
+        onDeleteClicked: (Int) -> Unit
     ) : RecyclerView.ViewHolder(itemView) {
 
         private var model: Row? = null
+
+        init {
+            itemView?.containerDelete.setOnClickListener {
+                model?.let { model ->
+                    onDeleteClicked(model.id)
+                }
+            }
+        }
 
         fun updateWith(newModel: Row) {
             model = newModel

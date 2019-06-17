@@ -8,5 +8,5 @@ interface MainPresenter {
     fun onDestroy()
 
     fun onAddClicked()
-    fun onDeleteClicked()
+    fun onDeleteClicked(itemId: Int)
 }

@@ -49,7 +49,7 @@ class MainPresenterImpl(
         compositeDisposable.add(disposable)
     }
 
-    override fun onDeleteClicked() {
+    override fun onDeleteClicked(itemId: Int) {
         println("delete_click")
     }
 

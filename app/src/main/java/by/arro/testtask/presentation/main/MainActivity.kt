@@ -37,7 +37,11 @@ class MainActivity : AppCompatActivity(), MainView {
 
     private fun initRecyclerViews() {
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = RowsAdatpter(this)
+        recyclerView.adapter = RowsAdatpter(
+            this,
+            onDeleteClicked = { itemId ->
+                presenter.onDeleteClicked(itemId)
+            })
     }
 
 
