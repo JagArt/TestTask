@@ -1,6 +1,6 @@
 package by.arro.testtask.presentation.main
 
-import by.arro.testtask.presentation.domain.entity.Row
+import by.arro.testtask.domain.entity.Row
 
 interface MainView {
 

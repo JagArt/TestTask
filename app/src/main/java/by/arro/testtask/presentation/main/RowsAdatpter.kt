@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import by.arro.testtask.R
-import by.arro.testtask.presentation.domain.entity.Row
+import by.arro.testtask.domain.entity.Row
 import kotlinx.android.synthetic.main.item_row.view.*
 
 class RowsAdatpter(

@@ -1,4 +1,4 @@
-package by.arro.testtask.presentation.domain.entity
+package by.arro.testtask.domain.entity
 
 class Row(
 
