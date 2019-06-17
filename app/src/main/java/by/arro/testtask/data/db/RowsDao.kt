@@ -18,4 +18,7 @@ interface RowsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(row: RowDataModel)
+
+    @Query("DELETE FROM rows_table WHERE id = :itemId")
+    fun deleteById(itemId: Int)
 }

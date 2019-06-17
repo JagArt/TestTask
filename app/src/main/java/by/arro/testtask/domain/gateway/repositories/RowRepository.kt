@@ -10,4 +10,6 @@ interface RowRepository {
     fun getAllWithUpdate(): Flowable<List<Row>>
 
     fun save(row: Row)
+
+    fun deleteById(itemId: Int)
 }

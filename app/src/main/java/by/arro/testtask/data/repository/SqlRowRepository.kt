@@ -24,6 +24,10 @@ class SqlRowRepository(private val rowsDao: RowsDao) : RowRepository {
         rowsDao.insert(coreToRowDataModel(row))
     }
 
+    override fun deleteById(itemId: Int) {
+        rowsDao.deleteById(itemId)
+    }
+
     private fun coreToRowDataModel(row: Row) = RowDataModel(row.id, row.rowValue)
 
 
