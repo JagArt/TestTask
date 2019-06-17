@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import by.arro.testtask.R
+import by.arro.testtask.data.db.RowRoomDatabase
 import by.arro.testtask.data.repository.SqlRowRepository
 import by.arro.testtask.domain.entity.Row
 import by.arro.testtask.domain.interactors.GetRowInteractorImpl
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), MainView {
 
     private lateinit var presenter: MainPresenter
+    private lateinit var database: RowRoomDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +49,12 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     private fun createPresenter(): MainPresenter {
+
+        database = RowRoomDatabase.getDatabase(this)
+        val rowDao = database.getRowDao()
+
         return MainPresenterImpl(
-            GetRowInteractorImpl(SqlRowRepository())
+            GetRowInteractorImpl(SqlRowRepository(rowDao))
         )
     }
 
@@ -60,6 +66,7 @@ class MainActivity : AppCompatActivity(), MainView {
         if (isChangingConfigurations) {
             presenter.onDetach()
         } else {
+            RowRoomDatabase.onClose()
             presenter.onDestroy()
         }
         super.onDestroy()

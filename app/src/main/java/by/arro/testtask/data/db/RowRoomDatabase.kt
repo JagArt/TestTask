@@ -1,9 +1,12 @@
 package by.arro.testtask.data.db
 
+import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
+import by.arro.testtask.data.entity.RowDataModel
 
+@Database(entities = [RowDataModel::class], version = 1)
 abstract class RowRoomDatabase : RoomDatabase() {
 
     abstract fun getRowDao(): RowsDao
@@ -26,6 +29,11 @@ abstract class RowRoomDatabase : RoomDatabase() {
                 INSTANCE = instance
                 return instance
             }
+        }
+
+        fun onClose() {
+            if (INSTANCE?.isOpen != null) INSTANCE?.close();
+            INSTANCE = null
         }
     }
 }

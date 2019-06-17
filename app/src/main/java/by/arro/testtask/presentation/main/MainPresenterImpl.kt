@@ -2,7 +2,6 @@ package by.arro.testtask.presentation.main
 
 import by.arro.testtask.domain.entity.Row
 import by.arro.testtask.domain.interactors.GetRowInteractor
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -34,6 +33,8 @@ class MainPresenterImpl(
 
     override fun onDestroy() {
         view = null
+
+        compositeDisposable.clear()
     }
 
     override fun onAddClicked() {
@@ -49,7 +50,7 @@ class MainPresenterImpl(
     }
 
     private fun subscrybeToRowsLoad() {
-        val disposable = Single.fromCallable { getRowInteractor.get() }
+        val disposable = getRowInteractor.get()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe() { items ->
