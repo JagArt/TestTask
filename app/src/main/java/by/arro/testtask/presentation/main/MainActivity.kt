@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import by.arro.testtask.R
 import by.arro.testtask.presentation.domain.entity.Row
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,11 +22,17 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun updateRows(rows: List<Row>) {
-
+        adapter.update(rows)
     }
 
     private fun initViews() {
         fab.setOnClickListener { presenter.onAddClicked() }
+        initRecyclerViews()
+    }
+
+    private fun initRecyclerViews() {
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = RowsAdatpter(this)
     }
 
 
@@ -49,6 +56,9 @@ class MainActivity : AppCompatActivity(), MainView {
         }
         super.onDestroy()
     }
+
+    private val adapter: RowsAdatpter
+        get() = recyclerView.adapter as RowsAdatpter
 
     companion object {
         fun getIntent(context: Context) = Intent(context, MainActivity::class.java)

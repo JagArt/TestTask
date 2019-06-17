@@ -1,17 +1,21 @@
 package by.arro.testtask.presentation.main
 
-import android.view.View
+import by.arro.testtask.presentation.domain.entity.Row
 
-class MainPresenterImpl : MainPresenter{
+class MainPresenterImpl : MainPresenter {
 
     private var view: MainView? = null
+    private var items: List<Row> = listOf()
 
     override fun onFirstAttachView(view: MainView) {
         this.view = view
+        view.renderAll()
     }
 
     override fun onAttachView(view: MainView) {
         this.view = view
+        view.renderAll()
+
     }
 
     override fun onDetach() {
@@ -30,5 +34,7 @@ class MainPresenterImpl : MainPresenter{
         println("delete_click")
     }
 
-
+    private fun MainView.renderAll() {
+        updateRows(items)
+    }
 }

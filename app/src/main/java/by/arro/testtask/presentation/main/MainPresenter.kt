@@ -1,7 +1,5 @@
 package by.arro.testtask.presentation.main
 
-import android.view.View
-
 interface MainPresenter {
 
     fun onFirstAttachView(view: MainView)
