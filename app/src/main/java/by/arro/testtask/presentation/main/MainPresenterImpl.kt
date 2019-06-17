@@ -1,13 +1,16 @@
 package by.arro.testtask.presentation.main
 
 import by.arro.testtask.domain.entity.Row
+import by.arro.testtask.domain.interactors.AddRowInteractor
 import by.arro.testtask.domain.interactors.GetRowInteractor
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class MainPresenterImpl(
-    private val getRowInteractor: GetRowInteractor
+    private val getRowInteractor: GetRowInteractor,
+    private val addRowInteractor: AddRowInteractor
 ) : MainPresenter {
 
     private var view: MainView? = null
@@ -38,7 +41,12 @@ class MainPresenterImpl(
     }
 
     override fun onAddClicked() {
-        println("add_click")
+        val disposable = Completable.fromCallable { addRowInteractor.add(Row(0, "123")) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+
+        compositeDisposable.add(disposable)
     }
 
     override fun onDeleteClicked() {

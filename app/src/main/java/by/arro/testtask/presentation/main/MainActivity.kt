@@ -9,6 +9,7 @@ import by.arro.testtask.R
 import by.arro.testtask.data.db.RowRoomDatabase
 import by.arro.testtask.data.repository.SqlRowRepository
 import by.arro.testtask.domain.entity.Row
+import by.arro.testtask.domain.interactors.AddRowInteractorImpl
 import by.arro.testtask.domain.interactors.GetRowInteractorImpl
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -52,9 +53,11 @@ class MainActivity : AppCompatActivity(), MainView {
 
         database = RowRoomDatabase.getDatabase(this)
         val rowDao = database.getRowDao()
+        val sqlRowRepository = SqlRowRepository(rowDao)
 
         return MainPresenterImpl(
-            GetRowInteractorImpl(SqlRowRepository(rowDao))
+            GetRowInteractorImpl(sqlRowRepository),
+            AddRowInteractorImpl(sqlRowRepository)
         )
     }
 
