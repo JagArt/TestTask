@@ -2,6 +2,7 @@ package by.arro.testtask.presentation.main
 
 import by.arro.testtask.domain.entity.Row
 import by.arro.testtask.domain.interactors.AddRowInteractor
+import by.arro.testtask.domain.interactors.DeleteRowInteractor
 import by.arro.testtask.domain.interactors.GetRowInteractor
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -10,7 +11,8 @@ import io.reactivex.schedulers.Schedulers
 
 class MainPresenterImpl(
     private val getRowInteractor: GetRowInteractor,
-    private val addRowInteractor: AddRowInteractor
+    private val addRowInteractor: AddRowInteractor,
+    private val deleteRowInteractor: DeleteRowInteractor
 ) : MainPresenter {
 
     private var view: MainView? = null
@@ -50,7 +52,12 @@ class MainPresenterImpl(
     }
 
     override fun onDeleteClicked(itemId: Int) {
-        println("delete_click")
+        val disposable = Completable.fromCallable { deleteRowInteractor.delete(itemId) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+
+        compositeDisposable.add(disposable)
     }
 
     private fun MainView.renderAll() {
@@ -62,8 +69,9 @@ class MainPresenterImpl(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe() { items ->
-                this.items = items
-                view?.updateRows(items)
+                val reversedIitems = items.toMutableList().reversed().toList()
+                this.items = reversedIitems
+                view?.updateRows(reversedIitems)
             }
         compositeDisposable.add(disposable)
     }

@@ -10,6 +10,7 @@ import by.arro.testtask.data.db.RowRoomDatabase
 import by.arro.testtask.data.repository.SqlRowRepository
 import by.arro.testtask.domain.entity.Row
 import by.arro.testtask.domain.interactors.AddRowInteractorImpl
+import by.arro.testtask.domain.interactors.DeleteRowInteractorImpl
 import by.arro.testtask.domain.interactors.GetRowInteractorImpl
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -61,7 +62,8 @@ class MainActivity : AppCompatActivity(), MainView {
 
         return MainPresenterImpl(
             GetRowInteractorImpl(sqlRowRepository),
-            AddRowInteractorImpl(sqlRowRepository)
+            AddRowInteractorImpl(sqlRowRepository),
+            DeleteRowInteractorImpl(sqlRowRepository)
         )
     }
 
