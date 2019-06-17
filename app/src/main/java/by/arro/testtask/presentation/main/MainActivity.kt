@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import by.arro.testtask.R
 import by.arro.testtask.presentation.domain.entity.Row
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainView {
 
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity(), MainView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initViews()
         setupPresenter()
     }
 
@@ -22,17 +24,30 @@ class MainActivity : AppCompatActivity(), MainView {
 
     }
 
+    private fun initViews() {
+        fab.setOnClickListener { presenter.onAddClicked() }
+    }
+
 
     private fun setupPresenter() {
         presenter = (lastNonConfigurationInstance as? MainPresenter)?.apply {
             onAttachView(this@MainActivity)
-        } ?:MainPresenterImpl().apply {
+        } ?: MainPresenterImpl().apply {
             onFirstAttachView(this@MainActivity)
         }
     }
 
     override fun onRetainCustomNonConfigurationInstance(): Any {
         return presenter
+    }
+
+    override fun onDestroy() {
+        if (isChangingConfigurations) {
+            presenter.onDetach()
+        } else {
+            presenter.onDestroy()
+        }
+        super.onDestroy()
     }
 
     companion object {

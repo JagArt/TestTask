@@ -23,11 +23,11 @@ class MainPresenterImpl : MainPresenter{
     }
 
     override fun onAddClicked() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        println("add_click")
     }
 
     override fun onDeleteClicked() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        println("delete_click")
     }
 
 
